@@ -18,7 +18,5 @@ def transformar_datos(datos):
         .collect()
     )
 
-    df = df.with_columns(
-        pl.col("vigenciadesde", "vigenciahasta").dt.date()
-    )
+    df = df.with_columns(pl.col("vigenciadesde", "vigenciahasta").dt.date())
     return df
