@@ -22,7 +22,7 @@ jobs:
       - name: formato ruff
         uses: astral-sh/ruff-action@v4.0.0
         with:
-          args: "ruff --check"
+          args: "format --check"
   test:
     needs: lint
     runs-on: ${{matrix.os}}
