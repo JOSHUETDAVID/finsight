@@ -1,38 +1,38 @@
-name: CI
+name: prueba de os
 
 on:
-  pull_request:
-    branches: [main]
   push:
-    branches: [main]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 permissions:
   contents: read
 
+
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: Ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Ruff lint
+      - uses: actions/checkout@v5
+      - name: uso de ruff lint
         uses: astral-sh/ruff-action@v4.0.0
         with:
           args: "check"
-      - name: Ruff format check
+      - name: formato ruff
         uses: astral-sh/ruff-action@v4.0.0
         with:
           args: "format --check"
-
   test:
     needs: lint
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{matrix.os}}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
@@ -44,3 +44,4 @@ jobs:
           pip install pytest
       - name: Run tests
         run: pytest -v
+                  
