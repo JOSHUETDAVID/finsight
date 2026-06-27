@@ -1,0 +1,30 @@
+# Entorno virtual (se reconstruye en la imagen, NUNCA copiarlo)
+.venv
+
+# Secretos — CRÍTICO, nunca dentro de la imagen
+.env
+*.env
+!.env.example
+
+# Git
+.git
+.gitignore
+
+# Cachés de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Caché de pytest y herramientas
+.pytest_cache
+.ruff_cache
+
+# Datos generados (los regenera el pipeline, no los metas)
+data/*.parquet
+
+# CI/CD y config local
+.github
+
+# Documentación e IDE (no necesarios en runtime)
+README.md
+.vscode

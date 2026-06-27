@@ -1,0 +1,86 @@
+name: prueba de os
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+
+jobs:
+  lint:
+    runs-on: Ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: uso de ruff lint
+        uses: astral-sh/ruff-action@v4.0.0
+        with:
+          args: "check"
+      - name: formato ruff
+        uses: astral-sh/ruff-action@v4.0.0
+        with:
+          args: "format --check"
+  test:
+    needs: lint
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: [ "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: astral-sh/setup-uv@v8.1.0
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --locked --all-extras --dev
+      - name: Run tests
+        run: uv run pytest -v
+
+  docker-publish:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKER_HUB_USENAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_HUB_USENAME}}/finsigth-app:latest
+            ${{ secrets.DOCKER_HUB_USENAME}}/finsigth-app:latest:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+  deploy:
+    needs: docker-publish
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: falso-deploy
+        run: echo "Desplegando la aplicación en el entorno de producción..."
+
+
+                  
