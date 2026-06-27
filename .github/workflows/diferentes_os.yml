@@ -68,8 +68,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.DOCKER_HUB_USENAME}}/finsigth-app:latest
-            ${{ secrets.DOCKER_HUB_USENAME}}/finsigth-app:latest:${{ github.sha }}
+            joshuetd/finsigth-app:latest
+            joshuetd/finsigth-app:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
   deploy:
