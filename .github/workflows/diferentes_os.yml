@@ -76,6 +76,8 @@ jobs:
     needs: docker-publish
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    environment:
+      name: deploy
     steps:
       - name: Checkout
         uses: actions/checkout@v6
