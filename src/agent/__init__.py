@@ -9,7 +9,7 @@ from datetime import date
 
 load_dotenv()
 
-os.environ["GEMINI_API_KEY"] = os.getenv("API_KEY_GEMINI")
+os.getenv("GEMINI_API_KEY")
 
 SYSTEM_PROMPT = " vas a invesstigar el TRM de la fecha indicada vas a devolver su valor, la fecha desde que entro en vigencia y y la fecha hasta que estuvo en vigencia, si te dan una fecha que no aparece dirás: 'no tengo el valor de esa fecha busque en google' SOLO VAS A RESPINER EN TEXTO PLANO NADA DE MARKDOWN NI JSON SOLO TEXTO PLANO"
 

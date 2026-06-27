@@ -16,7 +16,7 @@ def refrescar_datos():
 def main():
     refrescar_datos()
 
-    pregunta = input("Ingrese una fecha (YYYY-MM-DD) para consultar la TRM: ")
+    pregunta = " dime cual fue la TRM del 15 de junio del 2026"
     respuesta = preguntar(pregunta)
     print()
     print(f"Pregunta: {pregunta}")
