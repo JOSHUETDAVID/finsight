@@ -2,6 +2,7 @@
 from src.ingestion import obtener_datos
 from src.transformation import transformar_datos
 from src.storage import guardar_parquet
+from src.storage.posgrest import guardar_datos_bd
 from src.agent import preguntar
 
 
@@ -9,8 +10,9 @@ def refrescar_datos():
     """Pipeline de datos: descarga, transforma y guarda la TRM."""
     datos = obtener_datos()
     df = transformar_datos(datos)
+    sql = guardar_datos_bd(datos)
     ruta = guardar_parquet(df)
-    print(f"✅ Datos actualizados: {df.height} registros en {ruta}")
+    print(f"✅ Datos actualizados: {df.height} registros en {ruta} y en {sql}")
 
 
 def main():
