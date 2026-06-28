@@ -123,6 +123,7 @@ Fecha hasta que estuvo en vigencia: 2026-06-16
 
 ![Agente respondiendo](docs/demo.gif)
 
+
 ---
 
 ## Cómo lo probé
